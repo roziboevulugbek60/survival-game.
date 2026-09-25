@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>🏝️ Island Survival | ULUG'BEK.R</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+<div class="game-wrapper">
+
+    <!-- ==============================
+         START MENU
+    =============================== -->
+
+    <div
+        id="startScreen"
+        class="screen"
+    >
+
+        <div class="start-box">
+
+            <div class="island-logo">
+                🏝️
+            </div>
+
+            <h1>
+                ISLAND SURVIVAL
+            </h1>
+
+            <p class="subtitle">
+                Orolda yashab qol!
+            </p>
+
+            <input
+                id="playerName"
+                type="text"
+                maxlength="20"
+                placeholder="👤 Ismingizni kiriting"
+            >
+
+            <button
+                id="startBtn"
+                class="main-btn"
+            >
+                🎮 BOSHLASH
+            </button>
+
+            <button
+                id="loadBtn"
+                class="secondary-btn"
+            >
+                💾 SAQLANGAN O'YIN
+            </button>
+
+            <div class="menu-info">
+                <p>🎯 Maqsad: imkon qadar uzoq yashab qolish</p>
+                <p>🌲 Resurs yig‘ing • 🏠 Boshpana quring • 🔥 Olov yoqing</p>
+            </div>
+
+            <div class="author">
+                ULUG'BEK.R
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         MAIN GAME
+    =============================== -->
+
+    <div
+        id="gameScreen"
+        class="game-screen hidden"
+    >
+
+        <!-- TOP HUD -->
+
+        <div class="top-bar">
+
+            <div class="game-title">
+                🏝️ ISLAND SURVIVAL
+            </div>
+
+            <div class="player-info">
+
+                👤
+                <span id="playerDisplay">
+                    O'yinchi
+                </span>
+
+            </div>
+
+            <div class="day-info">
+
+                <span id="timeIcon">
+                    ☀️
+                </span>
+
+                <span id="dayText">
+                    DAY 1
+                </span>
+
+                <span id="clockText">
+                    08:00
+                </span>
+
+            </div>
+
+            <button
+                id="pauseBtn"
+                class="small-btn"
+            >
+                ⏸️
+            </button>
+
+        </div>
+
+
+        <!-- ==============================
+             GAME AREA
+        =============================== -->
+
+        <div class="game-area">
+
+            <!-- WORLD -->
+
+            <canvas
+                id="gameCanvas"
+                width="1200"
+                height="700"
+            >
+            </canvas>
+
+
+            <!-- ==============================
+                 PLAYER STATUS
+            =============================== -->
+
+            <div class="status-panel">
+
+                <div class="status-row">
+
+                    <span>
+                        ❤️ Health
+                    </span>
+
+                    <div class="bar">
+                        <div
+                            id="healthBar"
+                            class="bar-fill health"
+                        ></div>
+                    </div>
+
+                    <strong id="healthText">
+                        100
+                    </strong>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>
+                        🍖 Hunger
+                    </span>
+
+                    <div class="bar">
+                        <div
+                            id="hungerBar"
+                            class="bar-fill hunger"
+                        ></div>
+                    </div>
+
+                    <strong id="hungerText">
+                        100
+                    </strong>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>
+                        💧 Thirst
+                    </span>
+
+                    <div class="bar">
+                        <div
+                            id="thirstBar"
+                            class="bar-fill thirst"
+                        ></div>
+                    </div>
+
+                    <strong id="thirstText">
+                        100
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==============================
+                 SURVIVAL DAYS
+            =============================== -->
+
+            <div class="survival-counter">
+
+                🏆 Survival:
+
+                <strong id="survivalDays">
+                    1
+                </strong>
+
+                kun
+
+            </div>
+
+
+            <!-- ==============================
+                 INVENTORY
+            =============================== -->
+
+            <div class="inventory-panel">
+
+                <div class="inventory-title">
+                    🎒 INVENTORY
+                </div>
+
+
+                <div class="inventory-items">
+
+                    <div
+                        class="inventory-item"
+                        title="Yog'och"
+                    >
+
+                        <span>🪵</span>
+
+                        <strong id="woodCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="inventory-item"
+                        title="Tosh"
+                    >
+
+                        <span>🪨</span>
+
+                        <strong id="stoneCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="inventory-item"
+                        title="Olma"
+                    >
+
+                        <span>🍎</span>
+
+                        <strong id="foodCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="inventory-item"
+                        title="Suv"
+                    >
+
+                        <span>💧</span>
+
+                        <strong id="waterCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="inventory-item"
+                        title="Axe"
+                    >
+
+                        <span>🪓</span>
+
+                        <strong id="axeCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="inventory-item"
+                        title="Pickaxe"
+                    >
+
+                        <span>⛏️</span>
+
+                        <strong id="pickaxeCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==============================
+                 ACTION BUTTONS
+            =============================== -->
+
+            <div class="action-panel">
+
+                <button
+                    id="collectBtn"
+                    class="action-btn"
+                >
+                    ✋ YIG'ISH
+                </button>
+
+                <button
+                    id="buildFireBtn"
+                    class="action-btn"
+                >
+                    🔥 GULXAN
+                </button>
+
+                <button
+                    id="buildHouseBtn"
+                    class="action-btn"
+                >
+                    🏠 BOSHPANA
+                </button>
+
+                <button
+                    id="craftBtn"
+                    class="action-btn"
+                >
+                    🛠️ ASBOB
+                </button>
+
+            </div>
+
+
+            <!-- ==============================
+                 MOBILE CONTROLS
+            =============================== -->
+
+            <div class="mobile-controls">
+
+                <button
+                    data-key="ArrowUp"
+                >
+                    ▲
+                </button>
+
+                <div>
+
+                    <button
+                        data-key="ArrowLeft"
+                    >
+                        ◀
+                    </button>
+
+                    <button
+                        data-key="ArrowDown"
+                    >
+                        ▼
+                    </button>
+
+                    <button
+                        data-key="ArrowRight"
+                    >
+                        ▶
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==============================
+                 MESSAGE
+            =============================== -->
+
+            <div
+                id="gameMessage"
+                class="game-message"
+            >
+                🏝️ Orolga xush kelibsiz!
+            </div>
+
+
+            <!-- ==============================
+                 MUSIC / SOUND
+            =============================== -->
+
+            <div class="audio-controls">
+
+                <button id="soundBtn">
+                    🔊
+                </button>
+
+                <button id="musicBtn">
+                    🎵
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             BOTTOM BAR
+        =============================== -->
+
+        <div class="bottom-bar">
+
+            <div>
+                WASD / ⬅️⬆️⬇️➡️ — Harakat
+            </div>
+
+            <div class="author">
+                ULUG'BEK.R
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         PAUSE SCREEN
+    =============================== -->
+
+    <div
+        id="pauseScreen"
+        class="screen hidden"
+    >
+
+        <div class="pause-box">
+
+            <h2>
+                ⏸️ O'YIN PAUZA
+            </h2>
+
+            <button
+                id="resumeBtn"
+                class="main-btn"
+            >
+                ▶️ DAVOM ETISH
+            </button>
+
+            <button
+                id="saveBtn"
+                class="secondary-btn"
+            >
+                💾 SAQLASH
+            </button>
+
+            <button
+                id="menuBtn"
+                class="secondary-btn"
+            >
+                🏠 ASOSIY MENYU
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         GAME OVER
+    =============================== -->
+
+    <div
+        id="gameOverScreen"
+        class="screen hidden"
+    >
+
+        <div class="game-over-box">
+
+            <div class="game-over-icon">
+                💀
+            </div>
+
+            <h2>
+                O'YIN TUGADI
+            </h2>
+
+            <p>
+                Orol sizni mag'lub etdi...
+            </p>
+
+            <div class="final-stats">
+
+                <p>
+                    👤 O'yinchi:
+                    <strong id="finalName">
+                        -
+                    </strong>
+                </p>
+
+                <p>
+                    🏆 Survival kunlari:
+                    <strong id="finalDays">
+                        0
+                    </strong>
+                </p>
+
+                <p>
+                    🪵 Yog'och:
+                    <strong id="finalWood">
+                        0
+                    </strong>
+                </p>
+
+                <p>
+                    🪨 Tosh:
+                    <strong id="finalStone">
+                        0
+                    </strong>
+                </p>
+
+            </div>
+
+            <button
+                id="restartBtn"
+                class="main-btn"
+            >
+                🔄 QAYTA O'YNASH
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         CRAFT WINDOW
+    =============================== -->
+
+    <div
+        id="craftWindow"
+        class="modal hidden"
+    >
+
+        <div class="modal-box">
+
+            <button
+                class="close-btn"
+                id="closeCraftBtn"
+            >
+                ✖
+            </button>
+
+            <h2>
+                🛠️ ASBOBLAR YASASH
+            </h2>
+
+            <div class="craft-list">
+
+                <button
+                    id="craftAxeBtn"
+                    class="craft-item"
+                >
+
+                    🪓 AXE
+
+                    <small>
+                        🪵 5 + 🪨 2
+                    </small>
+
+                </button>
+
+
+                <button
+                    id="craftPickaxeBtn"
+                    class="craft-item"
+                >
+
+                    ⛏️ PICKAXE
+
+                    <small>
+                        🪵 4 + 🪨 5
+                    </small>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+         NOTIFICATION
+    =============================== -->
+
+    <div
+        id="notification"
+        class="notification"
+    >
+    </div>
+
+
+    <!-- ==============================
+         JAVASCRIPT
+    =============================== -->
+
+    <script src="script.js"></script>
+
+</div>
+
+</body>
+</html>
